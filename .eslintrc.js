@@ -3,7 +3,12 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
+    extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:@next/next/recommended',
+    ],
     overrides: [],
     parserOptions: {
         ecmaVersion: 'latest',

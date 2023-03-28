@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/normalize.css';
 import '../styles/global.css';
 import localFont from 'next/font/local';
+import PropTypes from 'prop-types';
 
 const kalam = localFont({
     src: [
@@ -30,3 +31,8 @@ export default function App({ Component, pageProps }) {
         </main>
     );
 }
+
+App.propTypes = {
+    Component: PropTypes.element.isRequired,
+    pageProps: PropTypes.object,
+};
