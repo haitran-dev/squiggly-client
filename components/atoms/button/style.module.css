@@ -1,0 +1,36 @@
+.button {
+    border: var(--border-button);
+    min-height: 30px;
+    text-align: center;
+}
+
+.big-button {
+    height: 2.5rem;
+    width: 12rem;
+}
+
+.bouncing-button {
+    position: relative;
+    border: var(--border-button);
+}
+
+.bouncing-button::before {
+    content: '';
+    width: 10px;
+    height: 100%;
+    position: absolute;
+    background-color: currentColor;
+    filter: brightness(1.2);
+}
+
+.bouncing-button::after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    filter: brightness(0.8);
+}
+
+.btn-shadow {
+    position: absolute;
+    background-color: var(--shadow-color);
+}
