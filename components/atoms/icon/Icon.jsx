@@ -5,7 +5,7 @@ export default function Icon({ id, color = '#000000', size = '24', ...delegated 
     console.log({ id });
     return (
         <svg width={size} height={size} {...delegated}>
-            <use fill={color} width={size} height={size} xlinkHref={`/svgs/sprite.svg#${id}`} />
+            <use fill={color} width={size} height={size} href={`/svgs/sprite.svg#${id}`} />
         </svg>
     );
 }

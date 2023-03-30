@@ -10,13 +10,15 @@ export default function App() {
         <Layout>
             <header className='flex justify-between'>
                 <BouncingButton variant={buttonConstants.variants.ABOUT}>
-                    <Icon color='white' size={40} id={iconConstants.ids.QUESTION_MARK} />
+                    <Icon color='white' size={20} id={iconConstants.ids.QUESTION_MARK} />
                 </BouncingButton>
-                <div className='space-x-6'>
+                <div className='flex gap-6'>
                     <BouncingButton variant={buttonConstants.variants.TWITTER}>
-                        Twitter
+                        <Icon color='white' size={32} id={iconConstants.ids.TWITTER} />
                     </BouncingButton>
-                    <BouncingButton variant={buttonConstants.variants.FACEBOOK}>FB</BouncingButton>
+                    <BouncingButton variant={buttonConstants.variants.FACEBOOK}>
+                        <Icon color='white' size={22} id={iconConstants.ids.FACEBOOK} />
+                    </BouncingButton>
                 </div>
             </header>
             <main className='flex flex-col flex-1 items-center'>

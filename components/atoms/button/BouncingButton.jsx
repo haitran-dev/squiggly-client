@@ -2,7 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { buttonConstants } from '.';
 import PropTypes from 'prop-types';
+import { Howl } from 'howler';
 
+// Sound
+const soundDown = new Howl({
+    src: ['/sounds/mouse-down.wav'],
+    volume: 0.3,
+});
+
+const soundUp = new Howl({
+    src: ['/sounds/mouse-up.wav'],
+    volume: 0.3,
+});
+
+console.log({ soundDown, soundUp });
+
+// Styles
 const Left = styled.div`
     content: '';
     display: block;
@@ -48,6 +63,7 @@ const Button = styled.div`
     /* Properties */
     display: inline-block;
     position: relative;
+    height: min-content;
     cursor: pointer;
     z-index: 0;
 
@@ -120,21 +136,6 @@ const Button = styled.div`
     }
 `;
 
-export default function BouncingButton({ children, ...delegated }) {
-    return (
-        <Button {...delegated}>
-            <Left />
-            <Front>{children}</Front>
-            <Bottom />
-            <Shadow />
-        </Button>
-    );
-}
-
-BouncingButton.propTypes = {
-    children: PropTypes.any.isRequired,
-};
-
 const getVariantColor = (variant = buttonConstants.variants.DEFAULT) => {
     const options = {
         [buttonConstants.variants.DEFAULT]: '#cccccc',
@@ -154,4 +155,27 @@ const getSize = (size = buttonConstants.sizes.DEFAULT) => {
     };
 
     return options[size] || options[buttonConstants.sizes.DEFAULT];
+};
+
+export default function BouncingButton({ children, ...delegated }) {
+    const playSoundDown = () => {
+        soundDown.play();
+    };
+
+    const playSoundUp = () => {
+        soundUp.play();
+    };
+
+    return (
+        <Button onMouseDown={playSoundDown} onMouseUp={playSoundUp} {...delegated}>
+            <Left />
+            <Front>{children}</Front>
+            <Bottom />
+            <Shadow />
+        </Button>
+    );
+}
+
+BouncingButton.propTypes = {
+    children: PropTypes.any.isRequired,
 };
