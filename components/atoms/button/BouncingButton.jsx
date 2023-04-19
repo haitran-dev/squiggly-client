@@ -15,8 +15,6 @@ const soundUp = new Howl({
     volume: 0.3,
 });
 
-console.log({ soundDown, soundUp });
-
 // Styles
 const Left = styled.div`
     content: '';
@@ -158,11 +156,19 @@ const getSize = (size = buttonConstants.sizes.DEFAULT) => {
 };
 
 export default function BouncingButton({ children, ...delegated }) {
+    React.useEffect(() => {
+        window.soundDown = soundDown;
+        window.soundUp = soundUp;
+    }, []);
+
     const playSoundDown = () => {
+        console.log({ soundDown });
         soundDown.play();
     };
 
     const playSoundUp = () => {
+        console.log({ soundUp });
+
         soundUp.play();
     };
 

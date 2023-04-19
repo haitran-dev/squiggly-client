@@ -33,6 +33,6 @@ export default function App({ Component, pageProps }) {
 }
 
 App.propTypes = {
-    Component: PropTypes.element.isRequired,
+    Component: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
     pageProps: PropTypes.object,
 };
