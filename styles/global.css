@@ -2,5 +2,5 @@
 @tailwind utilities;
 
 :root {
-    --shadow-color: #dedede;
+	--shadow-color: hsl(0, 0%, 50%, 0.4);
 }

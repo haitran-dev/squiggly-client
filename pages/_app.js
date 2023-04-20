@@ -1,6 +1,6 @@
 import React from 'react';
-import '../styles/normalize.css';
-import '../styles/global.css';
+import 'styles/normalize.css';
+import 'styles/global.css';
 import localFont from 'next/font/local';
 import PropTypes from 'prop-types';
 
