@@ -1,12 +1,12 @@
 import { Icon, iconConstants } from 'components/atoms/icon';
-import React from 'react';
+import { Modal } from 'components/atoms/modal';
 import Layout from 'components/layout';
+import { InfoModal } from 'components/modals';
+import useToggle from 'hooks/useToggle';
 import Image from 'next/image';
 import BannerImage from 'public/images/banner.png';
 import { BouncingButton, buttonConstants } from '../components/atoms/button';
-import { Modal } from 'components/atoms/modal';
-import useToggle from 'hooks/useToggle';
-import { InfoModal } from 'components/modals';
+import React from 'react';
 
 export default function App() {
 	const [isInfoModalOpen, toggleIsInfoModalOpen] = useToggle(false);
@@ -21,7 +21,9 @@ export default function App() {
 					>
 						<Icon color='white' size={20} id={iconConstants.ids.QUESTION_MARK} />
 					</BouncingButton>
-
+					<Modal isOpen={isInfoModalOpen} handleDismiss={toggleIsInfoModalOpen}>
+						<InfoModal />
+					</Modal>
 					<div className='flex gap-6'>
 						<BouncingButton variant={buttonConstants.variants.TWITTER}>
 							<Icon color='white' size={32} id={iconConstants.ids.TWITTER} />
@@ -49,11 +51,6 @@ export default function App() {
 						Let&apos;s draw
 					</BouncingButton>
 				</main>
-				{isInfoModalOpen && (
-					<Modal title='App-info' handleDismiss={toggleIsInfoModalOpen}>
-						<InfoModal />
-					</Modal>
-				)}
 			</>
 		</Layout>
 	);
