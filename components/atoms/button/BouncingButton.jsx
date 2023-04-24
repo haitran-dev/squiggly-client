@@ -32,6 +32,7 @@ const Bottom = styled.div`
 	width: 100%;
 	filter: brightness(0.72);
 	transform: skewX(-30deg);
+	border-top: none;
 `;
 
 const Front = styled.div`
@@ -41,6 +42,7 @@ const Front = styled.div`
 	height: 100%;
 	display: flex;
 	align-items: center;
+	border-left: none;
 `;
 
 const Shadow = styled.div`
