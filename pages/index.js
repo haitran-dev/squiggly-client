@@ -13,9 +13,30 @@ export default function App() {
 	const [isInfoModalOpen, toggleIsInfoModalOpen] = useToggle(false);
 
 	const drawBackground = (ctx) => {
-		ctx.fillRect(25, 25, 100, 100);
-		ctx.clearRect(45, 45, 60, 60);
-		ctx.strokeRect(50, 50, 50, 50);
+		for (let i = 0; i < window.innerWidth; i = i + 20) {
+			for (let j = 0; j < window.innerHeight; j = j + 20) {
+				if ((i > 0 && i % 100 === 0) || (j > 0 && j % 100 === 0)) {
+					ctx.fillStyle = '#ff2255';
+				} else {
+					ctx.fillStyle = '#9090ff';
+				}
+				ctx.fillRect(i, j, 2, 2);
+			}
+		}
+
+		ctx.beginPath();
+		ctx.strokeStyle = 'gray';
+		ctx.moveTo(200, 20);
+		ctx.lineTo(200, 130);
+		ctx.lineTo(50, 20);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.strokeStyle = 'black';
+		ctx.lineWidth = 3;
+		ctx.moveTo(200, 20);
+		ctx.arcTo(200, 130, 50, 20, 50);
+		ctx.stroke();
 	};
 
 	return (

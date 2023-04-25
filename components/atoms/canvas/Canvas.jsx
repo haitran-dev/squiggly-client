@@ -7,7 +7,7 @@ const Canvas = ({ draw, width, height, fallbackText }) => {
 	React.useEffect(() => {
 		if (!width || !height) {
 			canvasRef.current.width = window.innerWidth;
-			canvasRef.current.width = window.innerHeight;
+			canvasRef.current.height = window.innerHeight;
 		}
 
 		const context = canvasRef.current.getContext('2d');
