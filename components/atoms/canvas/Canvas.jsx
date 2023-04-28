@@ -5,14 +5,23 @@ const Canvas = ({ draw, width, height, fallbackText }) => {
 	const canvasRef = React.useRef();
 
 	React.useEffect(() => {
-		if (!width || !height) {
-			canvasRef.current.width = window.innerWidth;
-			canvasRef.current.height = window.innerHeight;
-		}
-
 		const context = canvasRef.current.getContext('2d');
-		draw(context);
-	}, []);
+		const drawCanvas = () => {
+			if (!width || !height) {
+				canvasRef.current.width = window.innerWidth;
+				canvasRef.current.height = window.innerHeight;
+			}
+			draw(context);
+		};
+
+		// Initialize
+		drawCanvas();
+
+		// Handle resizing
+		window.addEventListener('resize', drawCanvas);
+
+		return () => window.removeEventListener('resize', drawCanvas);
+	}, [draw, width, height]);
 
 	return (
 		<canvas ref={canvasRef} width={width} height={height}>

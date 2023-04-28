@@ -158,11 +158,6 @@ const getSize = (size = buttonConstants.sizes.DEFAULT) => {
 };
 
 export default function BouncingButton({ variant, children, ...delegated }) {
-	React.useEffect(() => {
-		window.soundDown = soundDown;
-		window.soundUp = soundUp;
-	}, []);
-
 	const playSoundDown = () => {
 		soundDown.play();
 	};

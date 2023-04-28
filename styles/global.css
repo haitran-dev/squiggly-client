@@ -25,5 +25,5 @@
 
 html {
 	font-family: 'Kalam';
-	--shadow-color: hsl(0, 0%, 50%, 0.4);
+	--shadow-color: hsl(0, 0%, 0%, 0.16);
 }

@@ -8,7 +8,7 @@ module.exports = {
 	theme: {
 		extend: {
 			screens: {
-				'sm-height': { raw: '(max-height: 639px)' },
+				'md-height': { raw: '(min-height: 640px)' },
 			},
 			colors: {
 				dark: '#000000',

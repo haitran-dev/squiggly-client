@@ -7,7 +7,7 @@ import { BouncingButton } from '../button';
 const Backdrop = styled(Dialog.Overlay)`
 	position: fixed;
 	inset: 0;
-	background-color: hsl(0, 0%, 0%, 0.5);
+	background-color: hsl(0, 0%, 0%, 0.15);
 `;
 
 const Wrapper = styled.div`
@@ -52,7 +52,7 @@ const Modal = ({ isOpen, handleDismiss, children }) => {
 					>
 						<Panel>
 							{children}
-							<div className='absolute -top-14 -right-2'>
+							<div className='absolute -top-10 -right-4'>
 								<BouncingButton onClick={handleDismiss}>
 									&nbsp;X&nbsp;
 								</BouncingButton>
