@@ -6,7 +6,7 @@ import useToggle from 'hooks/useToggle';
 import Image from 'next/image';
 import BannerImage from 'public/images/banner.png';
 import { BouncingButton, buttonConstants } from '../components/atoms/button';
-import React, { useCallback, useId } from 'react';
+import React, { useCallback } from 'react';
 import { Canvas } from 'components/atoms/canvas';
 import { random } from 'utils/math';
 import useInterval from 'hooks/useInterval';
