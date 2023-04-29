@@ -1,23 +1,22 @@
 import { Icon, iconConstants } from 'components/atoms/icon';
-import { Modal } from 'components/atoms/modal';
 import Layout from 'components/layout';
 import { InfoModal } from 'components/modals';
 import useToggle from 'hooks/useToggle';
 import Image from 'next/image';
 import BannerImage from 'public/images/banner.png';
 import { BouncingButton, buttonConstants } from '../components/atoms/button';
-import React, { useCallback } from 'react';
+import * as React from 'react';
 import { Canvas } from 'components/atoms/canvas';
-import { random } from 'utils/math';
 import useInterval from 'hooks/useInterval';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
+import { Modal } from 'components/atoms/modal';
+import { random } from 'utils/math';
 
-export default function App({ appDomain }) {
+export default function App({ appDomain }: { appDomain: string }) {
 	const [isInfoModalOpen, toggleIsInfoModalOpen] = useToggle(false);
 
-	const drawBackground = useCallback((context) => {
-		/** @type {CanvasRenderingContext2D} */
+	const drawBackground = React.useCallback((context: CanvasRenderingContext2D) => {
 		const innerHeight = window.innerHeight;
 		const innerWidth = window.innerWidth;
 
@@ -40,25 +39,21 @@ export default function App({ appDomain }) {
 		}
 	}, []);
 
+	console.log({ size: buttonConstants.sizes.LG });
+
 	return (
 		<Layout>
-			<Canvas draw={drawBackground}>Home background canvas</Canvas>
+			<Canvas draw={drawBackground}> Home background canvas </Canvas>
 			<div className='fixed inset-0 p-[30px] flex flex-col overflow-y-auto'>
 				<header className='flex justify-between'>
 					<BouncingButton
 						onClick={toggleIsInfoModalOpen}
 						variant={buttonConstants.variants.ABOUT}
+						disable={true}
 					>
-						<Icon
-							color='white'
-							size={20}
-							id={iconConstants.ids.QUESTION_MARK}
-						/>
+						<Icon color='white' size={20} id={iconConstants.ids.QUESTION_MARK} />
 					</BouncingButton>
-					<Modal
-						isOpen={isInfoModalOpen}
-						handleDismiss={toggleIsInfoModalOpen}
-					>
+					<Modal isOpen={isInfoModalOpen} handleDismiss={toggleIsInfoModalOpen}>
 						<InfoModal />
 					</Modal>
 					<div className='flex gap-6'>
@@ -68,11 +63,7 @@ export default function App({ appDomain }) {
 							rel='noopener noreferrer'
 						>
 							<BouncingButton variant={buttonConstants.variants.TWITTER}>
-								<Icon
-									color='white'
-									size={32}
-									id={iconConstants.ids.TWITTER}
-								/>
+								<Icon color='white' size={32} id={iconConstants.ids.TWITTER} />
 							</BouncingButton>
 						</a>
 						<a
@@ -81,20 +72,16 @@ export default function App({ appDomain }) {
 							rel='noopener noreferrer'
 						>
 							<BouncingButton variant={buttonConstants.variants.FACEBOOK}>
-								<Icon
-									color='white'
-									size={22}
-									id={iconConstants.ids.FACEBOOK}
-								/>
+								<Icon color='white' size={22} id={iconConstants.ids.FACEBOOK} />
 							</BouncingButton>
 						</a>
 					</div>
 				</header>
 				<main className='flex flex-col flex-1 items-center'>
 					<LightBulb />
-					<p className='text-3xl md-height:text-5xl my-6'>Make it squiggly!!!</p>
+					<p className='text-3xl md-height:text-5xl my-6'> Make it squiggly!!! </p>
 					<p className='sm-height:text-xl text-2xl'>
-						Drawing anh Guessing. Let&apos;s scribble your idea !
+						Drawing anh Guessing. Let&apos;s scribble your idea!
 					</p>
 					<div className='h-24' />
 					<Link href='/playground'>
@@ -102,7 +89,7 @@ export default function App({ appDomain }) {
 							size={buttonConstants.sizes.LG}
 							variant={buttonConstants.variants.PRIMARY}
 						>
-							Let&apos;s draw
+							Let &apos;s draw
 						</BouncingButton>
 					</Link>
 					<div className='h-14' />
@@ -144,7 +131,7 @@ const LightBulb = () => {
 			className='flex-1 object-contain sm-height:w-[150px] w-[200px] sm:w-[350px]'
 			src={BannerImage}
 			alt='banner'
-			priority='true'
+			priority={true}
 		/>
 	);
 };

@@ -25,7 +25,13 @@ const Panel = styled.div`
 	background-color: hsl(0, 0%, 100%);
 `;
 
-const Modal = ({ isOpen, handleDismiss, children }) => {
+type ModalType = {
+	isOpen: boolean;
+	handleDismiss: () => void;
+	children: React.ReactNode;
+};
+
+const Modal = ({ isOpen, handleDismiss, children }: ModalType) => {
 	return (
 		<Transition.Root show={isOpen} as={Fragment}>
 			<Dialog as='div' onClose={handleDismiss}>
@@ -63,13 +69,6 @@ const Modal = ({ isOpen, handleDismiss, children }) => {
 			</Dialog>
 		</Transition.Root>
 	);
-};
-
-Modal.propTypes = {
-	isOpen: PropTypes.bool,
-	handleDismiss: PropTypes.func,
-	title: PropTypes.string,
-	children: PropTypes.element,
 };
 
 export default Modal;

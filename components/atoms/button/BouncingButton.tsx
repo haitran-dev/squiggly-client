@@ -1,8 +1,7 @@
+import { Howl } from 'howler';
 import React from 'react';
 import styled from 'styled-components';
 import { buttonConstants } from '.';
-import PropTypes from 'prop-types';
-import { Howl } from 'howler';
 
 // Sound
 const soundDown = new Howl({
@@ -55,9 +54,9 @@ const Shadow = styled.div`
 	background-color: var(--shadow-color);
 `;
 
-const Button = styled.div`
+const Button = styled.div<{ btnVariant?: string; btnSize?: string }>`
 	/* Variables */
-	--current-background-color: ${(props) => getVariantColor(props.variant)};
+	--current-background-color: ${(props) => getVariantColor(props.btnVariant)};
 	--bottom-height: 0.8125em;
 
 	/* Properties */
@@ -104,7 +103,7 @@ const Button = styled.div`
 	}
 
 	> ${Front} {
-		${(props) => getSize(props.size)};
+		${(props) => getSize(props.btnSize)};
 		background-color: var(--current-background-color);
 	}
 
@@ -136,7 +135,7 @@ const Button = styled.div`
 	}
 `;
 
-const getVariantColor = (variant = buttonConstants.variants.DEFAULT) => {
+const getVariantColor = (variant: string = buttonConstants.variants.DEFAULT) => {
 	const options = {
 		[buttonConstants.variants.DEFAULT]: '#c3c3c3',
 		[buttonConstants.variants.PRIMARY]: '#fed138',
@@ -148,7 +147,7 @@ const getVariantColor = (variant = buttonConstants.variants.DEFAULT) => {
 	return options[variant] || options[buttonConstants.variants.DEFAULT];
 };
 
-const getSize = (size = buttonConstants.sizes.DEFAULT) => {
+const getSize = (size: string = buttonConstants.sizes.DEFAULT) => {
 	const options = {
 		[buttonConstants.sizes.DEFAULT]: 'height: 2rem; padding: 0 0.5rem',
 		[buttonConstants.sizes.LG]: 'height: 3rem; font-size: 1.5rem; padding: 0 3rem',
@@ -157,7 +156,18 @@ const getSize = (size = buttonConstants.sizes.DEFAULT) => {
 	return options[size] || options[buttonConstants.sizes.DEFAULT];
 };
 
-export default function BouncingButton({ variant, children, ...delegated }) {
+type BouncingButtonProp = {
+	variant?: string;
+	size?: string;
+	children?: React.ReactNode;
+} & Record<string, any>;
+
+export default function BouncingButton({
+	variant,
+	size,
+	children,
+	...delegated
+}: BouncingButtonProp) {
 	const playSoundDown = () => {
 		soundDown.play();
 	};
@@ -170,7 +180,8 @@ export default function BouncingButton({ variant, children, ...delegated }) {
 		<Button
 			onMouseDown={playSoundDown}
 			onMouseUp={playSoundUp}
-			variant={variant}
+			btnVariant={variant}
+			btnSize={size}
 			{...delegated}
 		>
 			<Left />
@@ -180,8 +191,3 @@ export default function BouncingButton({ variant, children, ...delegated }) {
 		</Button>
 	);
 }
-
-BouncingButton.propTypes = {
-	children: PropTypes.any.isRequired,
-	variant: PropTypes.string,
-};

@@ -1,15 +1,16 @@
 import React from 'react';
-import { safeInvoke } from 'utils/safe';
 
-const useInterval = (callback, delay = 1000, isPause) => {
-	const savedCallback = React.useRef(callback);
+type Tick = () => void | null;
+
+function useInterval(callback: Tick, delay: number = 1000, isPause: boolean = false): void {
+	const savedCallback = React.useRef<Tick>(callback);
 
 	React.useEffect(() => {
 		savedCallback.current = callback;
 	}, [callback]);
 
 	React.useEffect(() => {
-		const tick = () => safeInvoke(savedCallback.current);
+		const tick = savedCallback.current;
 
 		const id = setInterval(tick, delay);
 
@@ -17,6 +18,6 @@ const useInterval = (callback, delay = 1000, isPause) => {
 			clearInterval(id);
 		};
 	}, [delay, isPause]);
-};
+}
 
 export default useInterval;
