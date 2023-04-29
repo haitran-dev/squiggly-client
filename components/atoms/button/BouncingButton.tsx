@@ -160,7 +160,7 @@ type BouncingButtonProp = {
 	variant?: string;
 	size?: string;
 	children?: React.ReactNode;
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 export default function BouncingButton({
 	variant,

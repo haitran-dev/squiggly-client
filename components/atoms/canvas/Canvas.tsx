@@ -1,11 +1,11 @@
 import React from 'react';
 
 type CanvasProps = {
-	draw?: (context: CanvasRenderingContext2D | null) => void;
+	draw?: (context: CanvasRenderingContext2D) => void;
 	width?: number;
 	height?: number;
 	children?: React.ReactNode;
-} & Record<string, any>;
+} & Record<string, unknown>;
 
 type Point = {
 	x: number;
@@ -21,6 +21,8 @@ const Canvas = ({ draw, width, height, children, ...delegated }: CanvasProps) =>
 		if (!canvasEle) return;
 
 		const context = canvasEle.getContext('2d');
+		if (!context) return;
+
 		const drawCanvas = () => {
 			if (!width || !height) {
 				canvasEle.width = window.innerWidth;
@@ -71,7 +73,7 @@ const Canvas = ({ draw, width, height, children, ...delegated }: CanvasProps) =>
 
 			context.beginPath();
 			context.fillStyle = lineColor;
-			context.arc(startPoint.x, startPoint.y, lineWidth / 1.5, 0, 2 * Math.PI);
+			context.arc(startPoint.x, startPoint.y, lineWidth / 2.5, 0, 2 * Math.PI);
 			context.fill();
 
 			prevPoint.current = currentPoint;

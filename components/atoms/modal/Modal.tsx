@@ -1,5 +1,4 @@
 import { Dialog, Transition } from '@headlessui/react';
-import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { BouncingButton } from '../button';

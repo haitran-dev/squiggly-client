@@ -1,17 +1,17 @@
+import { Canvas } from 'components/atoms/canvas';
 import { Icon, iconConstants } from 'components/atoms/icon';
+import { Modal } from 'components/atoms/modal';
 import Layout from 'components/layout';
 import { InfoModal } from 'components/modals';
+import useInterval from 'hooks/useInterval';
 import useToggle from 'hooks/useToggle';
 import Image from 'next/image';
-import BannerImage from 'public/images/banner.png';
-import { BouncingButton, buttonConstants } from '../components/atoms/button';
-import * as React from 'react';
-import { Canvas } from 'components/atoms/canvas';
-import useInterval from 'hooks/useInterval';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { Modal } from 'components/atoms/modal';
+import PropTypes from 'prop-types';
+import BannerImage from 'public/images/banner.png';
+import React from 'react';
 import { random } from 'utils/math';
+import { BouncingButton, buttonConstants } from '../components/atoms/button';
 
 export default function App({ appDomain }: { appDomain: string }) {
 	const [isInfoModalOpen, toggleIsInfoModalOpen] = useToggle(false);
@@ -38,8 +38,6 @@ export default function App({ appDomain }: { appDomain: string }) {
 			context.stroke();
 		}
 	}, []);
-
-	console.log({ size: buttonConstants.sizes.LG });
 
 	return (
 		<Layout>
@@ -128,7 +126,7 @@ const LightBulb = () => {
 	return (
 		<Image
 			style={{ opacity: lightBulbOpacity }}
-			className='flex-1 object-contain sm-height:w-[150px] w-[200px] sm:w-[350px]'
+			className='flex-1 object-contain sm-height:w-[150px] w-[200px] sm:w-[300px]'
 			src={BannerImage}
 			alt='banner'
 			priority={true}

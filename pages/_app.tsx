@@ -1,8 +1,9 @@
 import 'styles/global.css';
 import 'styles/normalize.css';
+import React from 'react';
 
 type AppProps = {
-	Component: React.ComponentType<any>;
+	Component: React.ComponentType<unknown>;
 	pageProps: object;
 };
 
