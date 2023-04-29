@@ -98,10 +98,11 @@ App.propTypes = {
 };
 
 export async function getStaticProps() {
-	const appDomain = process.env.DOMAIN;
+	const domain = process.env.DOMAIN;
+
 	return {
 		props: {
-			appDomain,
+			appDomain: domain,
 		},
 	};
 }
@@ -109,8 +110,6 @@ export async function getStaticProps() {
 const LightBulb = () => {
 	const [lightBulbOpacity, setLightBulbOpacity] = React.useState(1.0);
 	const [flickerDelay, setFlickerDelay] = React.useState(200);
-
-	console.log({ flickerDelay });
 
 	useInterval(() => {
 		setLightBulbOpacity((prevState) => 1.5 - prevState);
