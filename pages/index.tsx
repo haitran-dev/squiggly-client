@@ -16,32 +16,40 @@ import { BouncingButton, buttonConstants } from '../components/atoms/button';
 export default function App({ appDomain }: { appDomain: string }) {
 	const [isInfoModalOpen, toggleIsInfoModalOpen] = useToggle(false);
 
-	const drawBackground = React.useCallback((context: CanvasRenderingContext2D) => {
-		const innerHeight = window.innerHeight;
-		const innerWidth = window.innerWidth;
+	const drawBackground = React.useCallback(
+		({
+			context,
+			windowWidth,
+			windowHeight,
+		}: {
+			context: CanvasRenderingContext2D;
+			windowWidth: number;
+			windowHeight: number;
+		}): void => {
+			for (let i = 0; i < windowHeight - 20; i = i + 27) {
+				context.beginPath();
+				context.moveTo(i, random(10, 20));
+				context.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+				context.lineWidth = 1;
+				context.lineTo(i, windowWidth - random(10, 20));
+				context.stroke();
+			}
 
-		for (let i = 0; i < innerWidth - 20; i = i + 27) {
-			context.beginPath();
-			context.moveTo(i, random(10, 20));
-			context.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-			context.lineWidth = 1;
-			context.lineTo(i, innerHeight - random(10, 20));
-			context.stroke();
-		}
-
-		for (let i = 0; i < innerHeight; i = i + 27) {
-			context.beginPath();
-			context.moveTo(random(10, 20), i);
-			context.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-			context.lineWidth = 1;
-			context.lineTo(innerWidth - random(10, 20), i);
-			context.stroke();
-		}
-	}, []);
+			for (let i = 0; i < windowWidth; i = i + 27) {
+				context.beginPath();
+				context.moveTo(random(10, 20), i);
+				context.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+				context.lineWidth = 1;
+				context.lineTo(windowHeight - random(10, 20), i);
+				context.stroke();
+			}
+		},
+		[]
+	);
 
 	return (
 		<Layout>
-			<Canvas draw={drawBackground}> Home background canvas </Canvas>
+			<Canvas draw={drawBackground}>Home background canvas </Canvas>
 			<div className='fixed inset-0 p-[30px] flex flex-col overflow-y-auto'>
 				<header className='flex justify-between'>
 					<BouncingButton
