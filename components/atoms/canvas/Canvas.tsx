@@ -20,11 +20,10 @@ const Canvas = React.forwardRef((props: CanvasProps, ref: React.Ref<HTMLCanvasEl
 		if (!canvas) return;
 
 		const drawCanvas = () => {
-			canvas.width = width ?? window.innerWidth;
 			canvas.height = height ?? window.innerHeight;
-
+			canvas.width = width ?? window.innerWidth;
 			if (typeof draw === 'function') {
-				draw({ context, windowWidth: canvas.width, windowHeight: canvas.height });
+				draw({ context });
 			}
 		};
 

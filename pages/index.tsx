@@ -17,30 +17,27 @@ export default function App({ appDomain }: { appDomain: string }) {
 	const [isInfoModalOpen, toggleIsInfoModalOpen] = useToggle(false);
 
 	const drawBackground = React.useCallback(
-		({
-			context,
-			windowWidth,
-			windowHeight,
-		}: {
-			context: CanvasRenderingContext2D;
-			windowWidth: number;
-			windowHeight: number;
-		}): void => {
-			for (let i = 0; i < windowHeight - 20; i = i + 27) {
+		({ context }: { context: CanvasRenderingContext2D }): void => {
+			const strokeStyle = 'rgba(0, 0, 0, 0.1)';
+			const spaceBetweenLine = 27;
+			const windowHeight = window.innerHeight;
+			const windowWidth = window.innerWidth;
+
+			for (let i = 0; i < windowWidth - 20; i = i + spaceBetweenLine) {
 				context.beginPath();
 				context.moveTo(i, random(10, 20));
-				context.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+				context.strokeStyle = strokeStyle;
 				context.lineWidth = 1;
-				context.lineTo(i, windowWidth - random(10, 20));
+				context.lineTo(i, windowHeight - random(10, 20));
 				context.stroke();
 			}
 
-			for (let i = 0; i < windowWidth; i = i + 27) {
+			for (let i = 0; i < windowHeight; i = i + spaceBetweenLine) {
 				context.beginPath();
 				context.moveTo(random(10, 20), i);
-				context.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+				context.strokeStyle = strokeStyle;
 				context.lineWidth = 1;
-				context.lineTo(windowHeight - random(10, 20), i);
+				context.lineTo(windowWidth - random(10, 20), i);
 				context.stroke();
 			}
 		},
@@ -57,7 +54,7 @@ export default function App({ appDomain }: { appDomain: string }) {
 						variant={buttonConstants.variants.ABOUT}
 						disable={true}
 					>
-						<Icon color='white' size={20} id={iconConstants.ids.QUESTION_MARK} />
+						<Icon color='black' size={20} id={iconConstants.ids.QUESTION_MARK} />
 					</BouncingButton>
 					<Modal isOpen={isInfoModalOpen} handleDismiss={toggleIsInfoModalOpen}>
 						<InfoModal />
@@ -69,7 +66,7 @@ export default function App({ appDomain }: { appDomain: string }) {
 							rel='noopener noreferrer'
 						>
 							<BouncingButton variant={buttonConstants.variants.TWITTER}>
-								<Icon color='white' size={32} id={iconConstants.ids.TWITTER} />
+								<Icon color='black' size={32} id={iconConstants.ids.TWITTER} />
 							</BouncingButton>
 						</a>
 						<a
@@ -78,7 +75,7 @@ export default function App({ appDomain }: { appDomain: string }) {
 							rel='noopener noreferrer'
 						>
 							<BouncingButton variant={buttonConstants.variants.FACEBOOK}>
-								<Icon color='white' size={22} id={iconConstants.ids.FACEBOOK} />
+								<Icon color='black' size={22} id={iconConstants.ids.FACEBOOK} />
 							</BouncingButton>
 						</a>
 					</div>
@@ -90,7 +87,7 @@ export default function App({ appDomain }: { appDomain: string }) {
 						Drawing anh Guessing. Let&apos;s scribble your idea!
 					</p>
 					<div className='h-24' />
-					<Link href='/playground'>
+					<Link href='/drawboard'>
 						<BouncingButton
 							size={buttonConstants.sizes.LG}
 							variant={buttonConstants.variants.PRIMARY}
@@ -124,7 +121,7 @@ const LightBulb = () => {
 	const [flickerDelay, setFlickerDelay] = React.useState(200);
 
 	useInterval(() => {
-		setLightBulbOpacity((prevState) => 1.5 - prevState);
+		setLightBulbOpacity((prevState) => 1.7 - prevState);
 	}, flickerDelay);
 
 	useInterval(() => {

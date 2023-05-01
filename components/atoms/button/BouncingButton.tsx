@@ -20,8 +20,9 @@ const Left = styled.div`
 	display: block;
 	position: absolute;
 	height: 100%;
-	filter: brightness(1.3);
+	transform-origin: center;
 	transform: skewY(-60deg);
+	backface-visibility: hidden;
 `;
 
 const Bottom = styled.div`
@@ -29,9 +30,10 @@ const Bottom = styled.div`
 	display: block;
 	position: absolute;
 	width: 100%;
-	filter: brightness(0.72);
+	transform-origin: center;
 	transform: skewX(-30deg);
-	border-top: none;
+	outline: 1px solid transparent;
+	backface-visibility: hidden;
 `;
 
 const Front = styled.div`
@@ -44,20 +46,10 @@ const Front = styled.div`
 	border-left: none;
 `;
 
-const Shadow = styled.div`
-	position: absolute;
-	left: -0.5em;
-	top: 1.4em;
-	height: 100%;
-	z-index: -1;
-	width: calc(0.5em + 100% + 0.5em);
-	background-color: var(--shadow-color);
-`;
-
 const Button = styled.div<{ btnVariant?: string; btnSize?: string }>`
 	/* Variables */
-	--current-background-color: ${(props) => getVariantColor(props.btnVariant)};
-	--bottom-height: 0.8125em;
+	--bottom-height: 0.85em;
+	--border-width: 0.15rem;
 
 	/* Properties */
 	display: inline-block;
@@ -75,77 +67,56 @@ const Button = styled.div<{ btnVariant?: string; btnSize?: string }>`
 	&:active {
 		> ${Front} {
 			right: 0.25rem;
-			top: 0.46875rem;
+			top: 0.48rem;
 		}
 
 		> ${Left} {
 			width: 0.25rem;
-			top: 0.65625rem;
+			top: 0.65rem;
 		}
 
 		> ${Bottom} {
-			height: 0.375rem;
+			height: 0.4rem;
 			left: -0.375rem;
-		}
-
-		> ${Shadow} {
-			top: 1.1rem;
-			width: calc(100% + 0.6rem);
-			clip-path: polygon(
-				0 0,
-				calc(100% - 0.5rem) 0,
-				calc(100% - 0.25rem) calc(10% - 0.1rem),
-				100% 100%,
-				0.5875rem 100%,
-				0 calc(100% - 0.2875rem)
-			);
 		}
 	}
 
 	> ${Front} {
 		${(props) => getSize(props.btnSize)};
-		background-color: var(--current-background-color);
+		background-color: white;
+		border: var(--border-width) solid black;
+		border-radius: 0.2rem;
 	}
 
 	> ${Left} {
-		height: calc(100% - 0.03125em);
-		left: -0.5em;
-		top: 0.40625em;
+		z-index: -1;
+		height: calc(100% - 0.1em);
+		left: -0.45em;
+		top: 0.4em;
 		width: 0.5em;
-		background-color: var(--current-background-color);
+		background-color: white;
+		border-right: none;
+		border: var(--border-width) solid black;
+		border-right: none;
+		border-top-width: 0.25rem;
+		border-bottom-left-radius: 0.1rem;
+		border-top-right-radius: 0.1rem;
+		border-bottom: none;
 	}
 
 	> ${Bottom} {
 		left: -0.25em;
-		bottom: -0.8125em;
-		width: calc(100% + 0.03125em);
+		bottom: -0.79em;
+		z-index: -1;
+		width: calc(100% - 0.02em);
 		height: var(--bottom-height);
-		background-color: var(--current-background-color);
-	}
-
-	> ${Shadow} {
-		clip-path: polygon(
-			0 0,
-			calc(100% - 0.5rem) 0,
-			calc(100% - 0.25rem) calc(10% - 0.1rem),
-			100% 100%,
-			0.5875rem 100%,
-			0 calc(100% - 0.5875rem)
-		);
+		border: var(--border-width) solid black;
+		border-top: none;
+		background-color: white;
+		border-bottom-left-radius: 0.2em;
+		border-bottom-right-radius: 0.15em;
 	}
 `;
-
-const getVariantColor = (variant: string = buttonConstants.variants.DEFAULT) => {
-	const options = {
-		[buttonConstants.variants.DEFAULT]: '#c3c3c3',
-		[buttonConstants.variants.PRIMARY]: '#fed138',
-		[buttonConstants.variants.ABOUT]: '#ee7aa9',
-		[buttonConstants.variants.TWITTER]: '#5ca8dc',
-		[buttonConstants.variants.FACEBOOK]: '#3565a5',
-	};
-
-	return options[variant] || options[buttonConstants.variants.DEFAULT];
-};
 
 const getSize = (size: string = buttonConstants.sizes.DEFAULT) => {
 	const options = {
@@ -187,7 +158,6 @@ export default function BouncingButton({
 			<Left />
 			<Front>{children}</Front>
 			<Bottom />
-			<Shadow />
 		</Button>
 	);
 }
