@@ -202,12 +202,6 @@ export default class SignaturePad extends SignatureEventTarget {
 		this.canvas.removeEventListener('touchend', this._handleTouchEnd);
 	}
 
-	public onChange(callback: (data: PointGroup[]) => void): void {
-		this.addEventListener('data-change', (e) => {
-			callback(e.detail);
-		});
-	}
-
 	public isEmpty(): boolean {
 		return this._isEmpty;
 	}
