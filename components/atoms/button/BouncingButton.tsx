@@ -85,12 +85,12 @@ const Button = styled.div<{ btnVariant?: string; btnSize?: string }>`
 		${(props) => getSize(props.btnSize)};
 		background-color: white;
 		border: var(--border-width) solid black;
-		border-radius: 0.2rem;
+		border-radius: 0.15rem;
 	}
 
 	> ${Left} {
 		z-index: -1;
-		height: calc(100% - 0.1em);
+		height: calc(100%);
 		left: -0.45em;
 		top: 0.4em;
 		width: 0.5em;
@@ -101,6 +101,7 @@ const Button = styled.div<{ btnVariant?: string; btnSize?: string }>`
 		border-top-width: 0.25rem;
 		border-bottom-left-radius: 0.1rem;
 		border-top-right-radius: 0.1rem;
+		border-top-left-radius: 0.1rem;
 		border-bottom: none;
 	}
 
@@ -108,7 +109,7 @@ const Button = styled.div<{ btnVariant?: string; btnSize?: string }>`
 		left: -0.25em;
 		bottom: -0.79em;
 		z-index: -1;
-		width: calc(100% - 0.02em);
+		width: calc(100% - 0.04em);
 		height: var(--bottom-height);
 		border: var(--border-width) solid black;
 		border-top: none;

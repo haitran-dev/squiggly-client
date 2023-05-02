@@ -24,3 +24,24 @@ export const drawPaper = ({ context }: { context: CanvasRenderingContext2D }): v
 		context.stroke();
 	}
 };
+
+export type drawLineProps = Draw & {
+	lineWidth: number;
+	lineColor: string;
+};
+
+export const drawLine = ({ ctx, currentPoint, prevPoint, lineWidth, lineColor }: drawLineProps) => {
+	const startPoint = prevPoint ?? currentPoint;
+	ctx.beginPath();
+	ctx.lineWidth = lineWidth;
+	// ctx.lineCap = 'round';
+	ctx.strokeStyle = lineColor;
+	ctx.moveTo(startPoint.x, startPoint.y);
+	ctx.lineTo(currentPoint.x, currentPoint.y);
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.fillStyle = lineColor;
+	ctx.arc(startPoint.x, startPoint.y, lineWidth / 2, 0, 2 * Math.PI);
+	ctx.fill();
+};

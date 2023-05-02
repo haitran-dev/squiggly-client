@@ -1,27 +1,17 @@
 import { Canvas } from 'components/atoms/canvas';
+import { drawLine } from 'helper/draw-helper';
 import useDraw from 'hooks/useDraw';
 import React from 'react';
 
 const Playground = () => {
-	const lineColor = '#555';
+	const [lineColor, setLineColor] = React.useState('#555');
 	const [lineWidth, setLineWidth] = React.useState(2);
 
-	const drawLine = ({ ctx, currentPoint, prevPoint }: Draw) => {
-		const startPoint = prevPoint ?? currentPoint;
-		ctx.beginPath();
-		ctx.lineWidth = lineWidth;
-		ctx.strokeStyle = lineColor;
-		ctx.moveTo(startPoint.x, startPoint.y);
-		ctx.lineTo(currentPoint.x, currentPoint.y);
-		ctx.stroke();
-
-		ctx.beginPath();
-		ctx.fillStyle = lineColor;
-		ctx.arc(startPoint.x, startPoint.y, lineWidth / 2.4, 0, 2 * Math.PI);
-		ctx.fill();
+	const drawLinePlay = ({ ctx, currentPoint, prevPoint }: Draw) => {
+		drawLine({ ctx, currentPoint, prevPoint, lineWidth, lineColor });
 	};
 
-	const { canvasRef, handleMouseDown } = useDraw({ onDrawLine: drawLine });
+	const { canvasRef, handleMouseDown } = useDraw({ onDrawLine: drawLinePlay });
 
 	return (
 		<div>

@@ -107,7 +107,7 @@ App.propTypes = {
 };
 
 export async function getStaticProps() {
-	const domain = process.env.DOMAIN;
+	const domain = String(process.env.DOMAIN);
 
 	return {
 		props: {

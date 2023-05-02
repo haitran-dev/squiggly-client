@@ -1,67 +1,54 @@
 import { Canvas } from 'components/atoms/canvas';
+import { drawLine, drawPaper } from 'helper/draw-helper';
 import { socket } from 'helper/socket/draw';
-import SignaturePad, { PointGroup } from 'package/SignaturePad/signature_pad';
+import useDraw from 'hooks/useDraw';
+import { Point } from 'package/SignaturePad/point';
 import React from 'react';
-import { random } from 'utils/math';
 
 const DrawBoard = () => {
-	const canvasRef = React.useRef<HTMLCanvasElement>(null);
+	const drawLinePlay = ({ ctx, currentPoint, prevPoint }: Draw) => {
+		const lineWidth = 3;
+		const lineColor = '#555';
+		drawLine({ ctx, currentPoint, prevPoint, lineWidth, lineColor });
+
+		socket.emit('update-canvas', { data: { currentPoint, prevPoint } });
+	};
+
+	const { canvasRef, handleMouseDown } = useDraw({ onDrawLine: drawLinePlay });
 
 	React.useEffect(() => {
 		if (!canvasRef.current) return;
-		const signaturePad = new SignaturePad(canvasRef.current);
+		const ctx = canvasRef.current.getContext('2d');
+
+		if (!ctx) return;
 
 		socket.emit('init');
 
-		signaturePad.onChange((points) => {
-			socket.emit('update-draw', { points });
-		});
+		const onUpdate = ({
+			data,
+		}: {
+			data: { ctx: CanvasRenderingContext2D; currentPoint: Point; prevPoint: Point };
+		}) => {
+			const { currentPoint, prevPoint } = data;
 
-		const onInit = () => {
-			console.log('sending content');
+			drawLinePlay({ ctx, currentPoint, prevPoint });
 		};
 
-		const onUpdate = ({points}) => {
-			
-		}
-
-		socket.on('get-canvas-state', onInit);
-		socket.on('update-canvas', onUpdate)
+		socket.on('get-canvas-state', onInitSocket);
+		socket.on('get-update-canvas', onUpdate);
 
 		return () => {
-			socket.off('get-canvas-state', onInit);
-		socket.on('update-canvas', onUpdate)
-
+			socket.off('get-canvas-state', onInitSocket);
+			socket.off('get-update-canvas', onUpdate);
 		};
 	}, []);
 
-	const draw = ({ context }: { context: CanvasRenderingContext2D }): void => {
-		const strokeStyle = 'rgba(0, 0, 0, 0.072)';
-		const spaceBetweenLine = 27;
-		const windowHeight = window.innerHeight;
-		const windowWidth = window.innerWidth;
-
-		for (let i = 0; i < windowWidth - 20; i = i + spaceBetweenLine) {
-			context.beginPath();
-			context.moveTo(i, random(10, 20));
-			context.strokeStyle = strokeStyle;
-			context.lineWidth = 1;
-			context.lineTo(i, windowHeight - random(10, 20));
-			context.stroke();
-		}
-
-		for (let i = 0; i < windowHeight; i = i + spaceBetweenLine) {
-			context.beginPath();
-			context.moveTo(random(10, 20), i);
-			context.strokeStyle = strokeStyle;
-			context.lineWidth = 1;
-			context.lineTo(windowWidth - random(10, 20), i);
-			context.stroke();
-		}
+	const onInitSocket = () => {
+		console.log('sending content');
 	};
 
 	return (
-		<Canvas draw={draw} ref={canvasRef}>
+		<Canvas draw={drawPaper} ref={canvasRef} onMouseDown={handleMouseDown}>
 			Draw board
 		</Canvas>
 	);
