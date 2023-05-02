@@ -1,4 +1,5 @@
 import { Canvas } from 'components/atoms/canvas';
+import { socket } from 'helper/socket/draw';
 import SignaturePad, { PointGroup } from 'package/SignaturePad/signature_pad';
 import React from 'react';
 import { random } from 'utils/math';
@@ -9,6 +10,29 @@ const DrawBoard = () => {
 	React.useEffect(() => {
 		if (!canvasRef.current) return;
 		const signaturePad = new SignaturePad(canvasRef.current);
+
+		socket.emit('init');
+
+		signaturePad.onChange((points) => {
+			socket.emit('update-draw', { points });
+		});
+
+		const onInit = () => {
+			console.log('sending content');
+		};
+
+		const onUpdate = ({points}) => {
+			
+		}
+
+		socket.on('get-canvas-state', onInit);
+		socket.on('update-canvas', onUpdate)
+
+		return () => {
+			socket.off('get-canvas-state', onInit);
+		socket.on('update-canvas', onUpdate)
+
+		};
 	}, []);
 
 	const draw = ({ context }: { context: CanvasRenderingContext2D }): void => {

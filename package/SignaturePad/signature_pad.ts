@@ -202,6 +202,12 @@ export default class SignaturePad extends SignatureEventTarget {
 		this.canvas.removeEventListener('touchend', this._handleTouchEnd);
 	}
 
+	public onChange(callback: (data: PointGroup[]) => void): void {
+		this.addEventListener('data-change', (e) => {
+			callback(e.detail);
+		});
+	}
+
 	public isEmpty(): boolean {
 		return this._isEmpty;
 	}
@@ -346,7 +352,6 @@ export default class SignaturePad extends SignatureEventTarget {
 		const point = this._createPoint(x, y, pressure);
 		const lastPointGroup = this._data[this._data.length - 1];
 		const lastPoints = lastPointGroup.points;
-		console.log({ lastPoints });
 
 		const lastPoint = lastPoints.length > 0 && lastPoints[lastPoints.length - 1];
 		const isLastPointTooClose = lastPoint
@@ -364,8 +369,6 @@ export default class SignaturePad extends SignatureEventTarget {
 				this._drawCurve(curve, pointGroupOptions);
 			}
 
-			console.log({ lastPoint });
-
 			lastPoints.push({
 				time: point.time,
 				x: point.x,
@@ -375,6 +378,7 @@ export default class SignaturePad extends SignatureEventTarget {
 		}
 
 		this.dispatchEvent(new CustomEvent('afterUpdateStroke', { detail: event }));
+		this.dispatchEvent(new CustomEvent('data-change', { detail: this._data }));
 	}
 
 	private _strokeEnd(event: SignatureEvent): void {
@@ -423,8 +427,6 @@ export default class SignaturePad extends SignatureEventTarget {
 
 		_lastPoints.push(point);
 
-		console.log({ _lastPoints });
-
 		if (_lastPoints.length > 2) {
 			// To reduce the initial lag make it work with 3 points
 			// by copying the first point to the beginning.
@@ -434,7 +436,6 @@ export default class SignaturePad extends SignatureEventTarget {
 
 			// _points array will always have 4 points here.
 			const widths = this._calculateCurveWidths(_lastPoints[1], _lastPoints[2], options);
-			console.log({ widths });
 
 			const curve = Bezier.fromPoints(_lastPoints, widths);
 

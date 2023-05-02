@@ -23,6 +23,7 @@
 		"react-remove-scroll": "^2.5.5",
 		"remark": "^14.0.2",
 		"remark-html": "^15.0.2",
+		"socket.io-client": "^4.6.1",
 		"styled-components": "^5.3.9"
 	},
 	"devDependencies": {
